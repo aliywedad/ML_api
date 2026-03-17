@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -20,14 +22,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Configuration and Model Loading
-BASE_DIR = Path(__file__).resolve().parent.parent
-MODEL_DIR = BASE_DIR / "model"
-
+ 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    
 try:
-    model = joblib.load("best_model.pkl")
-    feature_names = joblib.load("feature_names.pkl")
-    train_params = joblib.load("train_params.pkl")
+    model = joblib.load(os.path.join(BASE_DIR, "best_model.pkl"))
+    feature_names = joblib.load(os.path.join(BASE_DIR, "feature_names.pkl"))
+    train_params = joblib.load(os.path.join(BASE_DIR, "train_params.pkl"))
     
     date_ref = train_params.get('date_ref', datetime.now())
     quartier_stats = train_params.get('quartier_stats', {})
