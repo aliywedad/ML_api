@@ -147,6 +147,9 @@ def predict(input_data: PredictionInput):
         # 2. Predict (Model predicts log(price))
         log_price = model.predict(features_df)[0]
         price_mru = float(np.expm1(log_price))
+        # incease the price by 8% of the surface area to account for the fact that the model was trained on data with a certain distribution and may underpredict for larger properties
+        # give me example of a property with 200 m2, the model predicts 10 million MRU, but in reality, it should be around 11.6 million MRU (10 million + 0.08 * 200 * 1000) 
+        price_mru += input_data.surface_m2 * 0.08 * 1000
         
         # 3. Currency conversion (1 EUR ≈ 43 MRU approx)
         price_eur = price_mru / 43.0
