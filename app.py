@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_DIR = BASE_DIR / "model"
 
 try:
-    model = joblib.load(MODEL_DIR / "best_model.pkl")
-    feature_names = joblib.load(MODEL_DIR / "feature_names.pkl")
-    train_params = joblib.load(MODEL_DIR / "train_params.pkl")
+    model = joblib.load("best_model.pkl")
+    feature_names = joblib.load("feature_names.pkl")
+    train_params = joblib.load("train_params.pkl")
     
     date_ref = train_params.get('date_ref', datetime.now())
     quartier_stats = train_params.get('quartier_stats', {})
